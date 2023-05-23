@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { HomeContext } from "./index";
 import { getAllCategory } from "../../admin/categories/FetchApi";
 import { getAllProduct, productByPrice } from "../../admin/products/FetchApi";
+import { MultiSelect } from "react-multi-select-component";
 import "./style.css";
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -61,11 +62,35 @@ const CategoryList = () => {
 const FilterList = () => {
   const { data, dispatch } = useContext(HomeContext);
   const [range, setRange] = useState(0);
+  const [{ products, pCategories, makeModels }, setState] = useState({
+    products: {},
+    pCategories: {},
+    makeModels: {},
+  });
 
   const rangeHandle = (e) => {
     setRange(e.target.value);
     fetchData(e.target.value);
   };
+  const fetchFilterData = async () => {
+    let { Products } = await getAllProduct();
+    let categories = [];
+    Products.forEach((product) => {
+      if (product.pCategory) {
+        categories = [
+          ...categories,
+          { value: product.pCategory._id, label: product.pCategory.cName },
+        ];
+      }
+    });
+    setState((currentState) => ({
+      ...currentState,
+      pCategories: categories,
+    }));
+  };
+  useEffect(() => {
+    fetchFilterData();
+  }, []);
 
   const fetchData = async (price) => {
     if (price === "all") {
@@ -83,7 +108,6 @@ const FilterList = () => {
         setTimeout(async () => {
           let responseData = await productByPrice(price);
           if (responseData && responseData.Products) {
-            console.log(responseData.Products);
             dispatch({ type: "setProducts", payload: responseData.Products });
             dispatch({ type: "loading", payload: false });
           }
@@ -120,6 +144,40 @@ const FilterList = () => {
               max="1000"
               step="10"
               onChange={(e) => rangeHandle(e)}
+            />
+          </div>
+          <div onClick={(e) => closeFilterBar()} className="cursor-pointer">
+            <svg
+              className="w-8 h-8 text-gray-700 hover:bg-gray-200 rounded-full p-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div className="w-full flex flex-col">
+        <div className="font-medium py-2">Filter by Make Model</div>
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col space-y-2  w-2/3 lg:w-2/4">
+            <label htmlFor="points" className="text-sm">
+              Select Make Model
+            </label>
+            {/* WILL REPLACE MAKE MODEL HERE */}
+            <MultiSelect
+              options={pCategories || []}
+              value={[]}
+              onChange={() => {}}
+              hasSelectAll={false}
+              labelledBy={""}
             />
           </div>
           <div onClick={(e) => closeFilterBar()} className="cursor-pointer">
