@@ -41,17 +41,17 @@ CreateAllFolder();
 
 // Database Connection
 mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() =>
-    console.log(
-      "==============Mongodb Database Connected Successfully=============="
-    )
-  )
-  .catch((err) => console.log("Database Not Connected !!!"));
+	.connect(process.env.DATABASE, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+	})
+	.then(() =>
+		console.log(
+			"==============Mongodb Database Connected Successfully=============="
+		)
+	)
+	.catch((err) => console.log("Database Not Connected !!!"));
 
 // Middleware
 app.use(morgan("dev"));
@@ -73,5 +73,5 @@ app.use("/api/customize", customizeRouter);
 // Run Server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log("Server is running on ", PORT);
+	console.log("Server is running on ", PORT);
 });
