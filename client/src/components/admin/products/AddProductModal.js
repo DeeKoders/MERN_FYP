@@ -24,6 +24,8 @@ const AddProductDetail = ({ categories }) => {
     pModel: "",
     pMake: "",
     pVariant: "",
+    pInterior: "",
+    pExterior: "",
   });
 
   const fetchData = async () => {
@@ -68,6 +70,8 @@ const AddProductDetail = ({ categories }) => {
           pModel: "",
           pMake: "",
           pVariant: "",
+          pInterior: "",
+          pExterior: "",
         });
         setTimeout(() => {
           setFdata({
@@ -85,6 +89,8 @@ const AddProductDetail = ({ categories }) => {
             pModel: "",
             pMake: "",
             pVariant: "",
+            pInterior: "",
+            pExterior: "",
           });
         }, 2000);
       } else if (responseData.error) {
@@ -117,7 +123,7 @@ const AddProductDetail = ({ categories }) => {
         style={{
           height: "90vh",
           marginTop: "30px",
-          paddingTop: "220px",
+          paddingTop: "500px",
           borderRadius: "30px",
         }}
       >
@@ -255,6 +261,44 @@ const AddProductDetail = ({ categories }) => {
                 className="px-4 py-2 border focus:outline-none"
                 name="description"
                 id="description"
+                cols={5}
+                rows={2}
+              />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="description">Product Interior Details *</label>
+              <textarea
+                value={fData.pInterior}
+                onChange={(e) =>
+                  setFdata({
+                    ...fData,
+                    error: false,
+                    success: false,
+                    pInterior: e.target.value,
+                  })
+                }
+                className="px-4 py-2 border focus:outline-none"
+                name="interior"
+                id="interior"
+                cols={5}
+                rows={2}
+              />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="description">Product Exterior Details *</label>
+              <textarea
+                value={fData.pExterior}
+                onChange={(e) =>
+                  setFdata({
+                    ...fData,
+                    error: false,
+                    success: false,
+                    pExterior: e.target.value,
+                  })
+                }
+                className="px-4 py-2 border focus:outline-none"
+                name="exterior"
+                id="exterior"
                 cols={5}
                 rows={2}
               />

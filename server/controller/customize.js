@@ -18,7 +18,7 @@ class Customize {
   }
 
   async uploadSlideImage(req, res) {
-    let image = req.file.filename;
+    let image = req?.file?.filename;
     if (!image) {
       return res.json({ error: "All field required" });
     }

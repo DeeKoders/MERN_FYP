@@ -11,6 +11,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    pExterior: {
+      type: String,
+      required: false,
+    },
+    pInterior: {
+      type: String,
+      required: false,
+    },
     pPrice: {
       type: Number,
       required: true,
