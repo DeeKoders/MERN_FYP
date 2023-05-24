@@ -42,8 +42,18 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus } =
-      req.body;
+    let {
+      pName,
+      pDescription,
+      pPrice,
+      pQuantity,
+      pCategory,
+      pOffer,
+      pStatus,
+      pMake,
+      pModel,
+      pVariant,
+    } = req.body;
     let images = req.files;
     // Validation
     if (
@@ -84,6 +94,9 @@ class Product {
           pCategory,
           pOffer,
           pStatus,
+          pMake,
+          pModel,
+          pVariant,
         });
         let save = await newProduct.save();
         if (save) {
