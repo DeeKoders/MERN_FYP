@@ -21,6 +21,9 @@ const AddProductDetail = ({ categories }) => {
     pQuantity: "",
     success: false,
     error: false,
+    pModel: "",
+    pMake: "",
+    pVariant: "",
   });
 
   const fetchData = async () => {
@@ -62,6 +65,9 @@ const AddProductDetail = ({ categories }) => {
           pOffer: 0,
           success: responseData.success,
           error: false,
+          pModel: "",
+          pMake: "",
+          pVariant: "",
         });
         setTimeout(() => {
           setFdata({
@@ -76,6 +82,9 @@ const AddProductDetail = ({ categories }) => {
             pOffer: 0,
             success: false,
             error: false,
+            pModel: "",
+            pMake: "",
+            pVariant: "",
           });
         }, 2000);
       } else if (responseData.error) {
@@ -104,7 +113,13 @@ const AddProductDetail = ({ categories }) => {
       <div
         className={`${
           data.addProductModal ? "" : "hidden"
-        } fixed inset-0 flex items-center z-30 justify-center overflow-auto`}
+        } fixed inset-0 flex items-center z-30 justify-center overflow-scroll`}
+        style={{
+          height: "90vh",
+          marginTop: "30px",
+          paddingTop: "220px",
+          borderRadius: "30px",
+        }}
       >
         <div className="mt-32 md:mt-0 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
           <div className="flex items-center justify-between w-full pt-4">
@@ -172,6 +187,58 @@ const AddProductDetail = ({ categories }) => {
                   id="price"
                 />
               </div>
+            </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-1/2 flex flex-col space-y-1 space-x-1">
+                <label htmlFor="name">Product Make</label>
+                <input
+                  value={fData.pMake}
+                  onChange={(e) =>
+                    setFdata({
+                      ...fData,
+                      error: false,
+                      success: false,
+                      pMake: e.target.value,
+                    })
+                  }
+                  className="px-4 py-2 border focus:outline-none"
+                  type="text"
+                />
+              </div>
+              <div className="w-1/2 flex flex-col space-y-1 space-x-1">
+                <label htmlFor="price">Product Model</label>
+                <input
+                  value={fData.pModel}
+                  onChange={(e) =>
+                    setFdata({
+                      ...fData,
+                      error: false,
+                      success: false,
+                      pModel: e.target.value,
+                    })
+                  }
+                  type="number"
+                  className="px-4 py-2 border focus:outline-none"
+                  id="price"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="price">Product Variant</label>
+              <input
+                value={fData.pVariant}
+                onChange={(e) =>
+                  setFdata({
+                    ...fData,
+                    error: false,
+                    success: false,
+                    pVariant: e.target.value,
+                  })
+                }
+                type="text"
+                className="px-4 py-2 border focus:outline-none"
+                id="price"
+              />
             </div>
             <div className="flex flex-col space-y-2">
               <label htmlFor="description">Product Description *</label>
