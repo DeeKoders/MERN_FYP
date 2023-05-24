@@ -4,6 +4,7 @@ import { HomeContext } from "./index";
 import { getAllCategory } from "../../admin/categories/FetchApi";
 import { getAllProduct, productByPrice } from "../../admin/products/FetchApi";
 import { MultiSelect } from "react-multi-select-component";
+import { uniqBy } from "lodash";
 import "./style.css";
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -62,11 +63,14 @@ const CategoryList = () => {
 const FilterList = () => {
   const { data, dispatch } = useContext(HomeContext);
   const [range, setRange] = useState(0);
-  const [{ products, pCategories, makeModels }, setState] = useState({
-    products: {},
-    pCategories: {},
-    makeModels: {},
-  });
+  const [{ products, pCategories, pVariants, pModels, pMakes }, setState] =
+    useState({
+      products: {},
+      pCategories: {},
+      pVariants: {},
+      pModals: {},
+      pMakes: {},
+    });
 
   const rangeHandle = (e) => {
     setRange(e.target.value);
@@ -74,18 +78,34 @@ const FilterList = () => {
   };
   const fetchFilterData = async () => {
     let { Products } = await getAllProduct();
-    let categories = [];
+    let variants = [];
+    let makes = [];
+    let models = [];
+
     Products.forEach((product) => {
-      if (product.pCategory) {
-        categories = [
-          ...categories,
-          { value: product.pCategory._id, label: product.pCategory.cName },
+      if (product.pVariant) {
+        variants = [
+          ...variants,
+          { value: product.pVariant, label: product.pVariant },
         ];
       }
+      if (product.pMake) {
+        makes = [...makes, { value: product.pMake, label: product.pMake }];
+      }
+      if (product.pModel) {
+        models = [...models, { value: product.pModel, label: product.pModel }];
+      }
     });
+
+    variants = uniqBy(variants, "value");
+    makes = uniqBy(makes, "value");
+    models = uniqBy(models, "value");
+
     setState((currentState) => ({
       ...currentState,
-      pCategories: categories,
+      pVariants: variants,
+      pMakes: makes,
+      pModels: models,
     }));
   };
   useEffect(() => {
@@ -152,15 +172,82 @@ const FilterList = () => {
           </div>
         </div>
         <div className="w-2/3 mx-2">
-          <div className="font-medium py-2">Filter by Make Model</div>
+          <div className="font-medium py-2">Filter by Variant</div>
           <div className="flex justify-between items-center">
             <div className="flex flex-col space-y-2  w-2/3 lg:w-2/4">
               <label htmlFor="points" className="text-sm">
-                Select Make Model
+                Select Variant
               </label>
-              {/* WILL REPLACE MAKE MODEL HERE */}
               <MultiSelect
-                options={pCategories || []}
+                options={pVariants || []}
+                value={[]}
+                onChange={() => {}}
+                hasSelectAll={false}
+                labelledBy={""}
+              />
+            </div>
+            <div onClick={(e) => closeFilterBar()} className="cursor-pointer">
+              <svg
+                className="w-8 h-8 text-gray-700 hover:bg-gray-200 rounded-full p-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-full flex flex-row">
+        <div className="w-2/3 mx-2">
+          <div className="font-medium py-2">Filter by Make</div>
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col space-y-2  w-2/3 lg:w-2/4">
+              <label htmlFor="points" className="text-sm">
+                Select Make
+              </label>
+              <MultiSelect
+                options={pMakes || []}
+                value={[]}
+                onChange={() => {}}
+                hasSelectAll={false}
+                labelledBy={""}
+              />
+            </div>
+            <div onClick={(e) => closeFilterBar()} className="cursor-pointer">
+              <svg
+                className="w-8 h-8 text-gray-700 hover:bg-gray-200 rounded-full p-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div className="w-2/3 mx-2">
+          <div className="font-medium py-2">Filter by Model</div>
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col space-y-2  w-2/3 lg:w-2/4">
+              <label htmlFor="points" className="text-sm">
+                Select Model
+              </label>
+              <MultiSelect
+                options={pModels || []}
                 value={[]}
                 onChange={() => {}}
                 hasSelectAll={false}
