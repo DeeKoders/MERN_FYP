@@ -105,6 +105,7 @@ const ProductDetailsSection = (props) => {
   }
   return (
     <Fragment>
+      <div style={{ height: "20px" }}></div>
       <Submenu
         value={{
           categoryId: sProduct.pCategory._id,

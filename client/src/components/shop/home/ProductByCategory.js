@@ -9,6 +9,7 @@ const Submenu = ({ category }) => {
   const history = useHistory();
   return (
     <Fragment>
+      <div style={{ height: "20px" }}></div>
       {/* Submenu Section */}
       <section className="mx-4 mt-24 md:mx-12 md:mt-32 lg:mt-24">
         <div className="flex justify-between items-center">
