@@ -229,14 +229,14 @@ const ProductDetailsSection = (props) => {
             </div>
             <ButtonGroup className="w-100">
               <Button
-                color="dark"
+                color={`${selectedOption === "interior" ? "dark" : "light"}`}
                 onClick={() => handleOptionChange("interior")}
                 active={selectedOption === "interior"}
               >
                 Interior
               </Button>
               <Button
-                color="dark"
+                color={`${selectedOption === "exterior" ? "dark" : "light"}`}
                 onClick={() => handleOptionChange("exterior")}
                 active={selectedOption === "exterior"}
               >
