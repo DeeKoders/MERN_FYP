@@ -13,11 +13,11 @@ label {
   float: left;
 }
 
-.rating > input {
+.rating>input {
   display: none;
 }
 
-.rating > label:before {
+.rating>label:before {
   margin: 5px;
   font-size: 2.25em;
   font-family: FontAwesome;
@@ -45,7 +45,7 @@ label {
 <input type="radio" id="starhalf" name="rating" defaultValue={0.5} /><label className="half" htmlFor="starhalf" title="Sucks big time - 0.5 stars" />
 */
 
-.rating > label {
+.rating>label {
   color: #ddd;
   float: right;
 }
