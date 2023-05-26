@@ -122,8 +122,8 @@ const AddProductDetail = ({ categories }) => {
         } fixed inset-0 flex items-center z-30 justify-center overflow-scroll`}
         style={{
           height: "90vh",
-          marginTop: "30px",
-          paddingTop: "500px",
+          marginTop: "50px",
+          paddingTop: "600px",
           borderRadius: "30px",
         }}
       >
