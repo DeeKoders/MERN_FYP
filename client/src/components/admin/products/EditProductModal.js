@@ -104,7 +104,7 @@ const EditProductModal = (props) => {
         }
         className={`${
           data.editProductModal.modal ? "" : "hidden"
-        } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
+        } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50 `}
       />
       {/* End Black Overlay */}
 
@@ -113,6 +113,12 @@ const EditProductModal = (props) => {
         className={`${
           data.editProductModal.modal ? "" : "hidden"
         } fixed inset-0 flex items-center z-30 justify-center overflow-auto`}
+        style={{
+          height: "100vh",
+          paddingTop: "300px",
+          paddingBottom: "50px",
+          borderRadius: "30px",
+        }}
       >
         <div className="mt-32 md:mt-0 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
           <div className="flex items-center justify-between w-full pt-4">
