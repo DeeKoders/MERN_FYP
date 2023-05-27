@@ -125,35 +125,21 @@ const FilterList = () => {
   }, []);
 
   const applyFilter = async (type, value) => {
-    let allProducts = data.products;
     dispatch({ type: "loading", payload: true });
     let responseData = [];
     if (type === "Model") {
-      responseData = allProducts.filter((product) => product.pModel === value);
+      responseData = await productByModel(value);
     }
     if (type === "Variant") {
-      // responseData = await productByVariant(value);
-      responseData = allProducts.filter(
-        (product) => product.pVariant === value
-      );
+      responseData = await productByVariant(value);
     }
     if (type === "Make") {
-      // responseData = await productByMake(value);
-      responseData = allProducts.filter((product) => product.pMake === value);
+      responseData = await productByMake(value);
     }
     if (type === "Price") {
-      dispatch({ type: "loading", payload: true });
-      try {
-        setTimeout(async () => {
-          responseData = allProducts.filter(
-            (product) => product.pPri === value
-          );
-        }, 700);
-      } catch (error) {
-        console.log(error);
-      }
+      responseData = await productByPrice(value);
     }
-    dispatch({ type: "setProducts", payload: responseData });
+    dispatch({ type: "setProducts", payload: responseData.Products });
     dispatch({ type: "loading", payload: false });
   };
   const fetchData = async (price) => {
@@ -231,7 +217,10 @@ const FilterList = () => {
                   setFilterData((currentState) => ({
                     ...currentState,
                     selectedVariant: e,
+                    selectedMake: null,
+                    selectedModel: null,
                   }));
+                  setRange(0);
                   applyFilter("Variant", e.value);
                 }}
                 hasSelectAll={false}
@@ -268,8 +257,11 @@ const FilterList = () => {
                 onChange={(e) => {
                   setFilterData((currentState) => ({
                     ...currentState,
+                    selectedVariant: null,
                     selectedMake: e,
+                    selectedModel: null,
                   }));
+                  setRange(0);
                   applyFilter("Make", e.value);
                 }}
                 hasSelectAll={false}
@@ -288,8 +280,11 @@ const FilterList = () => {
                 onChange={(e) => {
                   setFilterData((currentState) => ({
                     ...currentState,
+                    selectedVariant: null,
+                    selectedMake: null,
                     selectedModel: e,
                   }));
+                  setRange(0);
                   applyFilter("Model", e.value);
                 }}
                 hasSelectAll={false}
