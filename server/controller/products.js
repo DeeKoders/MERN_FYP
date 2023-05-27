@@ -123,6 +123,11 @@ class Product {
       pOffer,
       pStatus,
       pImages,
+      pMake,
+      pModel,
+      pVariant,
+      pInterior,
+      pExterior,
     } = req.body;
     let editImages = req.files;
 
