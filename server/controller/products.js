@@ -158,6 +158,11 @@ class Product {
         pCategory,
         pOffer,
         pStatus,
+        pMake,
+        pModel,
+        pVariant,
+        pInterior,
+        pExterior,
       };
       if (editImages.length == 2) {
         let allEditImages = [];
