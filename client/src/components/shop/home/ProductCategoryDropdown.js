@@ -315,15 +315,13 @@ const Search = () => {
   };
 
   const fetchData = async () => {
-    dispatch({ type: "loading", payload: true });
     try {
-      setTimeout(async () => {
-        let responseData = await getAllProduct();
-        if (responseData && responseData.Products) {
-          setPa(responseData.Products);
-          dispatch({ type: "loading", payload: false });
-        }
-      }, 700);
+      dispatch({ type: "loading", payload: true });
+      let responseData = await getAllProduct();
+      if (responseData && responseData.Products) {
+        setPa(responseData.Products);
+        dispatch({ type: "loading", payload: false });
+      }
     } catch (error) {
       console.log(error);
     }
