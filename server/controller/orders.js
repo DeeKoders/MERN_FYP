@@ -1,5 +1,6 @@
 const orderModel = require("../models/orders");
-
+const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 class Order {
   async getAllOrders(req, res) {
     try {
@@ -97,6 +98,27 @@ class Order {
         console.log(error);
       }
     }
+  }
+  async sendEmail(req, res) {
+    const { senderEmail, subject, message } = req.body;
+    const transporter = req.transporter;
+
+    const mailOptions = {
+      to: "mahad@autoparts.com",
+      from: senderEmail,
+      subject: subject,
+      text: message,
+      html: `<h3>${message}</h3>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
+    return res.send("Success");
   }
 }
 

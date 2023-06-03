@@ -1,7 +1,20 @@
 import React from "react";
 import { Navber } from "./partials";
+import axios from "axios";
 
 const ContactUs = () => {
+  const apiURL = process.env.REACT_APP_API_URL;
+  const sendEmail = async () => {
+    const senderEmail = document.getElementById("senderEmail").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
+    let res = await axios.post(`${apiURL}/api/order/sendEmail`, {
+      message,
+      subject,
+      senderEmail,
+    });
+    console.log(res);
+  };
   return (
     <div>
       <Navber></Navber>
@@ -15,7 +28,7 @@ const ContactUs = () => {
             Got a technical issue? Want to send feedback about a beta feature?
             Need details about our Business plan? Let us know.
           </p>
-          <form action="#" class="space-y-8">
+          <form action="#" class="space-y-8" onSubmit={sendEmail}>
             <div>
               <label
                 for="email"
@@ -25,7 +38,7 @@ const ContactUs = () => {
               </label>
               <input
                 type="email"
-                id="email"
+                id="senderEmail"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                 placeholder=" name@autoparts.com"
                 required
@@ -61,13 +74,11 @@ const ContactUs = () => {
               ></textarea>
             </div>
 
-            <button
-              style={{ background: "#303031" }}
-              type="submit"
+            <input
               className="bg-gray-800 text-gray-100 rounded-full px-2 font-medium py-2"
-            >
-              Send Message
-            </button>
+              type="submit"
+              value="Submit"
+            />
           </form>
         </div>
       </section>
